@@ -6,6 +6,19 @@
 	<meta charset="UTF-8">
 	<title>Thymeleaf Layout</title>
 
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+				integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<link th:href="@{/css/layout1.css}" rel="stylesheet">
+
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+					integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+					integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+					integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"></script>
+
 	<th:block layout:fragment="script"></th:block>
 	<th:block layout:fragment="css"></th:block>
 </head>
@@ -13,7 +26,7 @@
 
 	<div th:replace="fragments/header::header"></div>
 
-	<div layout:fragment="content">
+	<div layout:fragment="content" class="content">
 
 	</div>
 
