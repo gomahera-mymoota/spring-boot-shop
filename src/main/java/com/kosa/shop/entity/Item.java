@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table
+@Table(name = "items")  // 테이블 이름을 복수형으로(책과 다름)
 @Getter
 @Setter
 @ToString
