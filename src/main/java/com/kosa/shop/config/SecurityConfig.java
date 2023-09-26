@@ -37,8 +37,14 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 .mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+                .mvcMatchers("/h2-console/", "/h2-console/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
+        ;
+
+        http.headers()
+                .frameOptions()
+                .sameOrigin()
         ;
 
         http.exceptionHandling()
