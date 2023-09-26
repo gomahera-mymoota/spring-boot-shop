@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MemberService extends UserDetailsService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 

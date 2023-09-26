@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="ko"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layouts/layout1}"
@@ -45,7 +45,7 @@
       </div>
       <div class="form-group">
         <label th:for="address">주소</label>
-        <input type="address" th:field="*{address}" class="form-control" placeholder="주소를 입력해주세요" />
+        <input type="text" th:field="*{address}" class="form-control" placeholder="주소를 입력해주세요" />
         <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">Incorredt data</p>
       </div>
       <div style="text-align: center">
