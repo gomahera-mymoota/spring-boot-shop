@@ -42,10 +42,13 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
         ;
 
-        http.headers()
-                .frameOptions()
-                .sameOrigin()
+        http.csrf()
+                 .ignoringAntMatchers("/h2-console/**")
         ;
+//        http.headers()
+//                .frameOptions()
+//                .sameOrigin()
+//        ;
 
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())

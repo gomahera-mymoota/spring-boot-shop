@@ -1,5 +1,6 @@
 package com.kosa.shop.entity;
 
+import com.kosa.shop.entity.id.CartItemId;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

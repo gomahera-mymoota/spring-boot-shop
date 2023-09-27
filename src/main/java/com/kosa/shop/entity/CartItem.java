@@ -1,21 +1,29 @@
 package com.kosa.shop.entity;
 
+import com.kosa.shop.entity.id.CartItemId;
+import lombok.*;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "cart_items")
-public class CartItem {
+@Data
+public class CartItem implements Serializable {
 
-    @Id
-    @GeneratedValue
-    @Column
-    private Long id;
+    @EmbeddedId
+    private CartItemId cartItemId;
 
-    @ManyToOne
-    private Cart cart;
+//    @Id
+//    @ManyToOne
+//    private Cart cart;
 
-    @ManyToOne
-    private Item item;
+//    @Id
+//    @ManyToOne
+//    private Cart cart;
+//
+//    @ManyToOne
+//    private Item item;
 
     private int count;
 }
