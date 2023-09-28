@@ -4,7 +4,9 @@ import com.kosa.shop.entity.id.OrderItemId;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 //@IdClass(OrderItemId.class)
-public class OrderItem implements Serializable {
+public class OrderItem extends BaseEntity implements Serializable {
 
     @EmbeddedId
     private OrderItemId orderItemId;
@@ -33,6 +35,4 @@ public class OrderItem implements Serializable {
     private int orderPrice;
     private int count;
 
-    private LocalDateTime regTime;
-    private LocalDateTime updateTime;
 }

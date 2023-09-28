@@ -1,7 +1,10 @@
 package com.kosa.shop.entity;
 
 import com.kosa.shop.constant.ItemSellStatus;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @Column
@@ -35,8 +38,5 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus sellStatus;
-
-    private LocalDateTime regTime;
-    private LocalDateTime updateTime;
 
 }

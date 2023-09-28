@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "cart_items")
 @Data
-public class CartItem implements Serializable {
+public class CartItem extends BaseEntity implements Serializable {
 
     @EmbeddedId
     private CartItemId cartItemId;

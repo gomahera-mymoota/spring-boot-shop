@@ -4,6 +4,7 @@ import com.kosa.shop.constant.ItemSellStatus;
 import com.kosa.shop.entity.id.OrderItemId;
 import com.kosa.shop.repository.ItemRepository;
 import com.kosa.shop.repository.MemberRepository;
+import com.kosa.shop.repository.OrderItemRepository;
 import com.kosa.shop.repository.OrderRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
-
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -32,6 +31,8 @@ class OrderTest {
     ItemRepository itemRepository;
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    OrderItemRepository orderItemRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -52,7 +53,7 @@ class OrderTest {
     public Order createOrder() {
         var order = new Order();
         for (int i = 0; i < 3; i++) {
-            var item = createItem();
+            var item = this.createItem();
             itemRepository.save(item);
 
             var orderItem = new OrderItem();
@@ -110,5 +111,23 @@ class OrderTest {
         var order = this.createOrder();
         order.getOrderItems().remove(0);
         em.flush();
+    }
+
+    @Test
+    @DisplayName("지연 로딩 테스트")
+    public void lazyLoadingTest() {
+        var order = this.createOrder();
+        var orderItemId = order.getOrderItems().get(0).getOrderItemId();
+        em.flush();
+        em.clear();
+
+        var orderItem = orderItemRepository.findById(orderItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        System.out.println("Order class: " + orderItem.getOrderItemId().getOrder().getClass());
+
+        System.out.println("==================================");
+        System.out.println(orderItem.getOrderItemId().getOrder().getOrderDate());
+        System.out.println("==================================");
     }
 }
