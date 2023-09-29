@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class Cart extends BaseEntity {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
