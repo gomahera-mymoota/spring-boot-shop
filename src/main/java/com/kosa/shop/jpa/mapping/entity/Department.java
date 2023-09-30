@@ -1,7 +1,7 @@
 package com.kosa.shop.jpa.mapping.entity;
 
-import lombok.Data;
-import org.jetbrains.annotations.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +10,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "departments")
-@Data
+@Getter
+@Setter
 public class Department {
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotNull
     private String name;
 }
