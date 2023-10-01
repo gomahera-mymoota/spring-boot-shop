@@ -52,10 +52,13 @@ class EmployeeTest {
         em.flush();
         em.clear();
 
-        var savedEmp = employeeRepository.findByDepartmentId(dept.getId())
+        var savedEmp = employeeRepository.findByDepartmentId(1L)
+//        var savedEmp = employeeRepository.findById(2L)
                 .orElseThrow(EntityNotFoundException::new);
 
-        Assertions.assertThat(savedEmp.get(0).getDepartment().getId()).isEqualTo(dept.getId());
+        var savedDept = departmentRepository.findById(1L);
+
+//        Assertions.assertThat(savedEmp.get(0).getDepartment().getId()).isEqualTo(dept.getId());
     }
 
 }

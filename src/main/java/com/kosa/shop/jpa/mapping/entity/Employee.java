@@ -19,6 +19,7 @@ public class Employee {
 
     private Integer salary;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne
     private Department department;
 }
