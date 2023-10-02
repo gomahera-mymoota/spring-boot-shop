@@ -12,6 +12,6 @@ public class ItemController {
     public String itemForm(Model model) {
         model.addAttribute("itemFormDto", new ItemFormDto());
 
-        return "/item/itemForm";
+        return "item/itemForm";
     }
 }
