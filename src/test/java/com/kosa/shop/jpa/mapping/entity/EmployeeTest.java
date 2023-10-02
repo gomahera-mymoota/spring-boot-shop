@@ -41,21 +41,30 @@ class EmployeeTest {
     @DisplayName("findEmployeeByName 테스트: ManyToOne 테스트")
     public void findEmployeeTest() {
         var dept = this.createDepartment("Accounting");
+        System.out.println("=====> departmentRepository.save(dept)");
         departmentRepository.save(dept);
 
         var emp = new Employee();
         emp.setName("Scott");
         emp.setSalary(2000);
         emp.setDepartment(dept);
+        System.out.println("=====> employeeRepository.save(emp)");
         employeeRepository.save(emp);
 
+        System.out.println("=====> em.flush()");
         em.flush();
+        System.out.println("=====> em.clear()");
         em.clear();
 
-        var savedEmp = employeeRepository.findByDepartmentId(1L)
-//        var savedEmp = employeeRepository.findById(2L)
+        System.out.println("=====> employeeRepository.findByDepartmentId(1L)");
+        var savedEmpList = employeeRepository.findByDepartmentId(1L)
                 .orElseThrow(EntityNotFoundException::new);
 
+        System.out.println("=====> employeeRepository.findById(2L)");
+        var savedEmp = employeeRepository.findById(2L)
+                .orElseThrow(EntityNotFoundException::new);
+
+        System.out.println("=====> departmentRepository.findById(1L)");
         var savedDept = departmentRepository.findById(1L);
 
 //        Assertions.assertThat(savedEmp.get(0).getDepartment().getId()).isEqualTo(dept.getId());
