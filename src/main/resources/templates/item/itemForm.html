@@ -5,6 +5,18 @@
   xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layouts/layout1}"
 >
+
+<!-- 사용자 정의 스크립트 -->
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    $(document).ready(function() {
+      let errorMessage = [[${errorMessage}]];
+    })
+  </script>
+  
+</th:block>
+
+
   <div layout:fragment="content">
     <h1>상품등록 페이지입니다.</h1>
   </div>
