@@ -19,7 +19,6 @@ public class ItemImgService {
     private String itemImgLocation;
 
     private final ItemImgRepository itemImgRepository;
-    private final FileService fileService;
 
     public void saveItemImg(ItemImg itemImg, MultipartFile itemImgFile) throws Exception {
         var oriImgName = itemImgFile.getOriginalFilename();

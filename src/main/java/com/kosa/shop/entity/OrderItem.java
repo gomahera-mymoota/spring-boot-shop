@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 //@IdClass(OrderItemId.class)
-public class OrderItem extends BaseEntity implements Serializable {
+public class OrderItem extends BaseEntity {
 
     @EmbeddedId
     private OrderItemId orderItemId;
