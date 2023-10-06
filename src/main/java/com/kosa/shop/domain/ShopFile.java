@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.java.Log;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,10 +23,12 @@ public class ShopFile {
     }
 
     private void pullSavedFileName(String originalFileName) {
-        var uuid = UUID.randomUUID();
-        var extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        if (StringUtils.hasLength(originalFileName)) {
+            var uuid = UUID.randomUUID();
+            var extension = originalFileName.substring(originalFileName.lastIndexOf("."));
 
-        this.savedFileName = uuid.toString() + extension;
+            this.savedFileName = uuid.toString() + extension;
+        }
     }
 
     public void upload(String uploadPath, byte[] fileData) throws Exception {
