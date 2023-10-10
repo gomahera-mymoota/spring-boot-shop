@@ -1,7 +1,7 @@
 package com.kosa.shop.dto;
 
-import com.kosa.shop.entity.Item;
-import com.kosa.shop.entity.ItemImg;
+import com.kosa.shop.domain.entity.Item;
+import com.kosa.shop.domain.entity.ItemImg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

@@ -2,7 +2,7 @@ package com.kosa.shop.service;
 
 import com.kosa.shop.constant.ItemSellStatus;
 import com.kosa.shop.dto.ItemFormDto;
-import com.kosa.shop.entity.ItemImg;
+import com.kosa.shop.domain.entity.ItemImg;
 import com.kosa.shop.repository.ItemImgRepository;
 import com.kosa.shop.repository.ItemRepository;
 import org.junit.jupiter.api.DisplayName;

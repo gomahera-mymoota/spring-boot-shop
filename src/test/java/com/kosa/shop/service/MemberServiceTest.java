@@ -1,7 +1,7 @@
 package com.kosa.shop.service;
 
 import com.kosa.shop.dto.MemberFormDto;
-import com.kosa.shop.entity.Member;
+import com.kosa.shop.domain.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

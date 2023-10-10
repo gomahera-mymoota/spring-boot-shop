@@ -1,6 +1,6 @@
 package com.kosa.shop.repository;
 
-import com.kosa.shop.entity.Member;
+import com.kosa.shop.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

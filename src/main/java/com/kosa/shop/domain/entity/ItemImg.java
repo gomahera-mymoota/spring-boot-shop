@@ -1,4 +1,4 @@
-package com.kosa.shop.entity;
+package com.kosa.shop.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.kosa.shop.service;
 
-import com.kosa.shop.entity.Member;
+import com.kosa.shop.domain.entity.Member;
 import com.kosa.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 

@@ -1,7 +1,11 @@
 package com.kosa.shop.entity;
 
 import com.kosa.shop.constant.ItemSellStatus;
-import com.kosa.shop.entity.id.OrderItemId;
+import com.kosa.shop.domain.entity.Item;
+import com.kosa.shop.domain.entity.Member;
+import com.kosa.shop.domain.entity.Order;
+import com.kosa.shop.domain.entity.OrderItem;
+import com.kosa.shop.domain.entity.id.OrderItemId;
 import com.kosa.shop.repository.ItemRepository;
 import com.kosa.shop.repository.MemberRepository;
 import com.kosa.shop.repository.OrderItemRepository;

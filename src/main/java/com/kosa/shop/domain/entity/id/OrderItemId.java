@@ -1,7 +1,7 @@
-package com.kosa.shop.entity.id;
+package com.kosa.shop.domain.entity.id;
 
-import com.kosa.shop.entity.Item;
-import com.kosa.shop.entity.Order;
+import com.kosa.shop.domain.entity.Item;
+import com.kosa.shop.domain.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

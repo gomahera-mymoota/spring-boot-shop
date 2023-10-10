@@ -1,7 +1,7 @@
-package com.kosa.shop.entity.id;
+package com.kosa.shop.domain.entity.id;
 
-import com.kosa.shop.entity.Cart;
-import com.kosa.shop.entity.Item;
+import com.kosa.shop.domain.entity.Cart;
+import com.kosa.shop.domain.entity.Item;
 import lombok.Data;
 
 import javax.persistence.Embeddable;

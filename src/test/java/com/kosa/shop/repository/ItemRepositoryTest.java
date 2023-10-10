@@ -1,7 +1,7 @@
 package com.kosa.shop.repository;
 
 import com.kosa.shop.constant.ItemSellStatus;
-import com.kosa.shop.entity.Item;
+import com.kosa.shop.domain.entity.Item;
 import com.kosa.shop.entity.QItem;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;

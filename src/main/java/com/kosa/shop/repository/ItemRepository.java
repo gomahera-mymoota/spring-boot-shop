@@ -1,6 +1,6 @@
 package com.kosa.shop.repository;
 
-import com.kosa.shop.entity.Item;
+import com.kosa.shop.domain.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;

@@ -1,5 +1,7 @@
 package com.kosa.shop.entity;
 
+import com.kosa.shop.domain.entity.Cart;
+import com.kosa.shop.domain.entity.Member;
 import com.kosa.shop.dto.MemberFormDto;
 import com.kosa.shop.repository.CartRepository;
 import com.kosa.shop.repository.MemberRepository;
@@ -17,7 +19,6 @@ import javax.persistence.PersistenceContext;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

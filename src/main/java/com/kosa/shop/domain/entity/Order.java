@@ -1,4 +1,4 @@
-package com.kosa.shop.entity;
+package com.kosa.shop.domain.entity;
 
 import com.kosa.shop.constant.OrderStatus;
 import lombok.Getter;

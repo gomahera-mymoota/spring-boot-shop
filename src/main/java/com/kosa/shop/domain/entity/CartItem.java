@@ -1,10 +1,9 @@
-package com.kosa.shop.entity;
+package com.kosa.shop.domain.entity;
 
-import com.kosa.shop.entity.id.CartItemId;
+import com.kosa.shop.domain.entity.id.CartItemId;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "cart_items")

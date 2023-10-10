@@ -53,7 +53,7 @@ public class ItemController {
     }
 
     @GetMapping("/admin/item/{itemId}")
-    public String itemFrom(@PathVariable("itemId") Long itemId, Model model) {
+    public String itemFormDto(@PathVariable("itemId") Long itemId, Model model) {
         try {
             var itemFormDto = itemService.getItemFormDto(itemId);
             model.addAttribute("itemFormDto", itemFormDto);

@@ -1,7 +1,7 @@
 package com.kosa.shop.controller;
 
 import com.kosa.shop.dto.MemberFormDto;
-import com.kosa.shop.entity.Member;
+import com.kosa.shop.domain.entity.Member;
 import com.kosa.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

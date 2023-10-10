@@ -1,7 +1,7 @@
 package com.kosa.shop.dto;
 
 import com.kosa.shop.constant.ItemSellStatus;
-import com.kosa.shop.entity.Item;
+import com.kosa.shop.domain.entity.Item;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
