@@ -1,8 +1,8 @@
 package com.kosa.shop.service;
 
+import com.kosa.shop.domain.entity.ItemImg;
 import com.kosa.shop.dto.ItemFormDto;
 import com.kosa.shop.dto.ItemImgDto;
-import com.kosa.shop.domain.entity.ItemImg;
 import com.kosa.shop.repository.ItemImgRepository;
 import com.kosa.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +31,8 @@ public class ItemService {
 
         int index = 0;
         for (var itemImgFile : itemImgFileList) {
-//            var itemImgId = new ItemImgId();
-//            itemImgId.setItem(item);
-
             var itemImg = new ItemImg();
             itemImg.setItem(item);
-//            itemImg.setItemImgId(itemImgId);
 
             if (index++ == 0 && StringUtils.hasLength(itemImgFile.getOriginalFilename())) {
                 itemImg.setIsRepImg(true);
@@ -64,6 +60,18 @@ public class ItemService {
         itemFormDto.setItemImgDtoList(itemImgDtos);
 
         return itemFormDto;
+    }
+
+    public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList)
+            throws Exception {
+        var item = itemRepository.findById(itemFormDto.getId())
+                .orElseThrow(EntityNotFoundException::new);
+        item.updateItem(itemFormDto);
+
+        var itemImgIds = itemFormDto.getItemImgIds();
+        itemImgService.updateItemImg(itemImgIds, itemImgFileList);
+
+        return item.getId();
     }
 }
 

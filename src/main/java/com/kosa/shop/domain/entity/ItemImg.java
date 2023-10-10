@@ -13,7 +13,7 @@ public class ItemImg extends BaseEntity {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     @ManyToOne
     private Item item;
     private String oriImgName;

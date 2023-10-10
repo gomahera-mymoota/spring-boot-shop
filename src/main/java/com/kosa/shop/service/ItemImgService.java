@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -34,25 +36,36 @@ public class ItemImgService {
         itemImgRepository.save(itemImg);
     }
 
-    public void updateItemImg(Integer itemImgId, MultipartFile itemImgFile) throws Exception {
+    public void updateItemImg(List<Long> itemImgIds, List<MultipartFile> itemImgFileList) {
+        IntStream.range(0, itemImgIds.size())
+                        .forEach(i ->
+                                updateItemImg(itemImgIds.get(i), itemImgFileList.get(i))
+                        );
+    }
+
+    public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) {
         if (itemImgFile.isEmpty()) {
             return;
         }
 
-        var savedItemImg = itemImgRepository.findById(itemImgId)
-                .orElseThrow(EntityNotFoundException::new);
+        try {
+            var savedItemImg = itemImgRepository.findById(itemImgId)
+                    .orElseThrow(EntityNotFoundException::new);
 
-        if (StringUtils.hasLength(savedItemImg.getImgName())) {
-            var shopFile = new ShopFile(savedItemImg.getOriImgName());
-            shopFile.delete(savedItemImg.getImgUrl());
+            if (StringUtils.hasLength(savedItemImg.getImgName())) {
+                var shopFile = new ShopFile(savedItemImg.getOriImgName());
+                shopFile.delete(savedItemImg.getImgUrl());
+            }
+
+            var oriImgName = itemImgFile.getOriginalFilename();
+            var shopFile = new ShopFile(oriImgName);
+            shopFile.upload(itemImgLocation, itemImgFile.getBytes());
+            var imgName = shopFile.getSavedFileName();
+            var imgUrl = StringUtils.hasLength(imgName) ? "/images/item" + imgName : "";
+
+            savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        var oriImgName = itemImgFile.getOriginalFilename();
-        var shopFile = new ShopFile(oriImgName);
-        shopFile.upload(itemImgLocation, itemImgFile.getBytes());
-        var imgName = shopFile.getSavedFileName();
-        var imgUrl = StringUtils.hasLength(imgName) ? "/images/item" + imgName : "";
-
-        savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
     }
 }
