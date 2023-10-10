@@ -1,6 +1,5 @@
 package com.kosa.shop.entity;
 
-import com.kosa.shop.entity.id.ItemImgId;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +11,6 @@ import javax.persistence.*;
 @Setter
 public class ItemImg extends BaseEntity {
 
-//    @EmbeddedId
-//    private ItemImgId itemImgId;
     @Id
     @GeneratedValue
     private Integer id;
@@ -26,7 +23,6 @@ public class ItemImg extends BaseEntity {
 
     public void updateItemImg(String oriImgName, String imgName, String imgUrl) {
         this.oriImgName = oriImgName;
-//        this.itemImgId.setImgName(imgName);
         this.imgName = imgName;
         this.imgUrl = imgUrl;
     }

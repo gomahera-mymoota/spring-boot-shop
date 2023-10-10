@@ -3,7 +3,6 @@ package com.kosa.shop.service;
 import com.kosa.shop.constant.ItemSellStatus;
 import com.kosa.shop.dto.ItemFormDto;
 import com.kosa.shop.entity.ItemImg;
-import com.kosa.shop.entity.id.ItemImgId;
 import com.kosa.shop.repository.ItemImgRepository;
 import com.kosa.shop.repository.ItemRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -54,11 +53,8 @@ class ItemImgServiceTest {
         var item = itemFormDto.createItem();
         itemRepository.save(item);
 
-        var itemImgId = new ItemImgId();
-        itemImgId.setItem(item);
-
         var itemImg = new ItemImg();
-        itemImg.setItemImgId(itemImgId);
+        itemImg.setItem(item);
         var multipartFileList = getMultipartFile();
 
         // when
@@ -68,8 +64,8 @@ class ItemImgServiceTest {
         em.clear();
 
         // then
-        var savedItemImg = itemImgRepository.findByItemImgIdItemId(item.getId());
-        assertThat(savedItemImg.get(0).getItemImgId()).isEqualTo(itemImgId);
+        var savedItemImg = itemImgRepository.findByItemIdOrderById(item.getId());
+        assertThat(savedItemImg.get(0).getId()).isEqualTo(itemImg.getId());
 //        System.out.println(savedItemImg.get(0).getItemImgId());
     }
 }

@@ -61,7 +61,7 @@ class ItemServiceTest {
         var itemId = itemService.saveItem(itemFormDto, multipartFileList);
 
         // when
-        var itemImgList = itemImgRepository.findByItemImgIdItemIdOrderByCreatedByAsc(itemId);
+        var itemImgList = itemImgRepository.findByItemIdOrderById(itemId);
         var item = itemRepository.findById(itemId)
                 .orElseThrow(EntityNotFoundException::new);
 
