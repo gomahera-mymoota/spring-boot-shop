@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 

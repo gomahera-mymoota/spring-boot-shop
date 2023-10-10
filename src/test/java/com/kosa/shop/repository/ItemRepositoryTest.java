@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.TestPropertySource;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -23,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
-//@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 class ItemRepositoryTest {
     @PersistenceContext
     EntityManager em;
