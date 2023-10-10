@@ -61,9 +61,10 @@ public class ItemController {
             e.printStackTrace();
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
             model.addAttribute("itemFormDto", new ItemFormDto());
-        } finally {
             return "item/itemForm";
         }
+
+        return "item/itemForm";
     }
 
     @PostMapping("/admin/item/{itemId}")
