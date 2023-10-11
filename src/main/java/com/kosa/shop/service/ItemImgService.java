@@ -54,14 +54,14 @@ public class ItemImgService {
 
             if (StringUtils.hasLength(savedItemImg.getImgName())) {
                 var shopFile = new ShopFile(savedItemImg.getOriImgName());
-                shopFile.delete(savedItemImg.getImgUrl());
+                shopFile.delete(itemImgLocation + "/" + savedItemImg.getImgName());
             }
 
             var oriImgName = itemImgFile.getOriginalFilename();
             var shopFile = new ShopFile(oriImgName);
             shopFile.upload(itemImgLocation, itemImgFile.getBytes());
             var imgName = shopFile.getSavedFileName();
-            var imgUrl = StringUtils.hasLength(imgName) ? "/images/item" + imgName : "";
+            var imgUrl = StringUtils.hasLength(imgName) ? "/images/item/" + imgName : "";
 
             savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
         } catch (Exception e) {
