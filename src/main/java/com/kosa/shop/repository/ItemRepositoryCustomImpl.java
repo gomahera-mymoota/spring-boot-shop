@@ -3,7 +3,10 @@ package com.kosa.shop.repository;
 import com.kosa.shop.constant.ItemSellStatus;
 import com.kosa.shop.domain.entity.Item;
 import com.kosa.shop.domain.entity.QItem;
+import com.kosa.shop.domain.entity.QItemImg;
 import com.kosa.shop.dto.ItemSearchDto;
+import com.kosa.shop.dto.MainItemDto;
+import com.kosa.shop.dto.QMainItemDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -55,6 +58,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         return null;
     }
 
+    private BooleanExpression nameLike(String searchQuery) {
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.name.like("%" + searchQuery + "%");
+    }
+
     @Override
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         var content = queryFactory
@@ -76,5 +83,28 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .fetchOne();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        var item = QItem.item;
+        var itemImg = QItemImg.itemImg;
+
+        var content = queryFactory
+                .select(new QMainItemDto(
+                        item.id,
+                        item.name,
+                        item.detail,
+                        itemImg.imgUrl,
+                        item.price)
+                )
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.isRepImg.isTrue())
+                .where(nameLike(itemSearchDto.getSearchQuery()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
     }
 }
