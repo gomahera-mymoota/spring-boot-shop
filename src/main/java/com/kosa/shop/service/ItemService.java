@@ -1,11 +1,15 @@
 package com.kosa.shop.service;
 
+import com.kosa.shop.domain.entity.Item;
 import com.kosa.shop.domain.entity.ItemImg;
 import com.kosa.shop.dto.ItemFormDto;
 import com.kosa.shop.dto.ItemImgDto;
+import com.kosa.shop.dto.ItemSearchDto;
 import com.kosa.shop.repository.ItemImgRepository;
 import com.kosa.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -72,6 +76,11 @@ public class ItemService {
         itemImgService.updateItemImg(itemImgIds, itemImgFileList);
 
         return item.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 }
 
