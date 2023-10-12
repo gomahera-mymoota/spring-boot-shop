@@ -18,9 +18,6 @@ public class SecurityConfig {
     // WebSecurityConfigurerAdapter가 deprecated 되어서
     // SecurityFilterChain 객체를 Bean으로 등록해야 함
 
-    @Autowired
-    MemberService memberService;
-
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.formLogin()
