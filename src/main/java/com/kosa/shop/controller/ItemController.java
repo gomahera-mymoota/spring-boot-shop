@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +58,7 @@ public class ItemController {
     @GetMapping("/admin/item/{itemId}")
     public String itemToForm(@PathVariable("itemId") Long itemId, Model model) {
         try {
-            var itemFormDto = itemService.getItemFormDto(itemId);
+            var itemFormDto = itemService.getItemDetail(itemId);
             model.addAttribute("itemFormDto", itemFormDto);
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
@@ -107,5 +106,14 @@ public class ItemController {
         model.addAttribute("maxPage", 5);
 
         return "item/itemMng";
+    }
+
+    @GetMapping("/item/{itemId}")
+    public String itemDetail(Model model, @PathVariable("itemId") Long itemId) {
+        var itemFormDto = itemService.getItemDetail(itemId);
+
+        model.addAttribute("item", itemFormDto);
+
+        return "item/itemDetail";
     }
 }

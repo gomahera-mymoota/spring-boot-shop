@@ -50,7 +50,7 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public ItemFormDto getItemFormDto(Long itemId) {
+    public ItemFormDto getItemDetail(Long itemId) {
         var itemImgs = itemImgRepository.findByItemIdOrderById(itemId);
         var itemImgDtos = new ArrayList<ItemImgDto>();
 
