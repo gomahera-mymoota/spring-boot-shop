@@ -61,7 +61,9 @@ class OrderTest {
             itemRepository.save(item);
 
             var orderItem = new OrderItem();
-            orderItem.setOrderItemId(new OrderItemId(order, item));
+//            orderItem.setOrderItemId(new OrderItemId(order, item));
+            orderItem.setOrder(order);
+            orderItem.setItem(item);
             orderItem.setCount(10);
             orderItem.setOrderPrice(1000);
 
@@ -86,12 +88,14 @@ class OrderTest {
             var item = this.createItem();
             itemRepository.save(item);
 
-            var orderItemId = new OrderItemId(order, item);
+//            var orderItemId = new OrderItemId(order, item);
 //            orderItemId.setItem(item);
 //            orderItemId.setOrder(order);
 
             var orderItem = new OrderItem();
-            orderItem.setOrderItemId(orderItemId);
+//            orderItem.setOrderItemId(orderItemId);
+            orderItem.setOrder(order);
+            orderItem.setItem(item);
             orderItem.setCount(10);
             orderItem.setOrderPrice(10000);
 

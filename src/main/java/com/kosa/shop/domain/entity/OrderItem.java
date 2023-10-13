@@ -2,6 +2,7 @@ package com.kosa.shop.domain.entity;
 
 import com.kosa.shop.domain.entity.id.OrderItemId;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.EmbeddedId;
@@ -18,6 +19,9 @@ public class OrderItem extends BaseEntity {
     @EmbeddedId
     private OrderItemId orderItemId;
 
+    public OrderItem() {
+        this.orderItemId = new OrderItemId();
+    }
 //    @Id
 //    @GeneratedValue
 //    private Long id;
