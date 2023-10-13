@@ -3,10 +3,16 @@ package com.kosa.shop.service;
 import com.kosa.shop.domain.entity.Order;
 import com.kosa.shop.domain.entity.OrderItem;
 import com.kosa.shop.dto.OrderDto;
+import com.kosa.shop.dto.OrderHistDto;
+import com.kosa.shop.dto.OrderItemDto;
+import com.kosa.shop.repository.ItemImgRepository;
 import com.kosa.shop.repository.ItemRepository;
 import com.kosa.shop.repository.MemberRepository;
 import com.kosa.shop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +27,7 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
+    private final ItemImgRepository itemImgRepository;
 
     public Long order(OrderDto orderDto, String email) {
         var item = itemRepository.findById(orderDto.getItemId())
@@ -37,4 +44,27 @@ public class OrderService {
 
         return order.getId();
     }
+
+    @Transactional(readOnly = true)
+    public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
+        var orders = orderRepository.findOrders(email, pageable);
+        var totalCount = orderRepository.countOrder(email);
+        var orderHistDtos = new ArrayList<OrderHistDto>();
+
+        for (var order : orders) {
+            var orderHistDto = new OrderHistDto(order);
+            var orderItems = order.getOrderItems();
+
+            for (var orderItem : orderItems) {
+                var itemImg = itemImgRepository.findByItemIdAndIsRepImgTrue(orderItem.getItem().getId());
+                var orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl());
+                orderHistDto.addOrderItemDto(orderItemDto);
+            }
+
+            orderHistDtos.add(orderHistDto);
+        }
+
+        return new PageImpl<OrderHistDto>(orderHistDtos, pageable, totalCount);
+    }
+
 }

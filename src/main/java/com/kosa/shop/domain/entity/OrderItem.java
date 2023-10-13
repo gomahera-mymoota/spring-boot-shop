@@ -37,10 +37,16 @@ public class OrderItem extends BaseEntity {
     private int orderPrice;
     private int count;
 
+    public Order getOrder() {
+        return this.orderItemId.getOrder();
+    }
     public void setOrder(Order order) {
         this.orderItemId.setOrder(order);
     }
 
+    public Item getItem() {
+        return this.orderItemId.getItem();
+    }
     public void setItem(Item item) {
         this.orderItemId.setItem(item);
     }
