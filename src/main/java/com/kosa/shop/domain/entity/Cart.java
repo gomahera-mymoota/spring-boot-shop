@@ -20,4 +20,11 @@ public class Cart extends BaseEntity {
 
     @OneToOne
     private Member member;
+
+    public static Cart createCart(Member member) {
+        var cart = new Cart();
+        cart.setMember(member);
+
+        return cart;
+    }
 }

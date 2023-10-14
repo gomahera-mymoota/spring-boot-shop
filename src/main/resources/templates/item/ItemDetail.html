@@ -54,6 +54,37 @@
         });
       }
 
+      function addCartItem() {
+        let url = "/cart";
+        let paramData = {
+          itemId: $("#itemId").val(),
+          count: $("#count").val(),
+        };
+
+        let param = JSON.stringify(paramData);
+
+        $.ajax({
+          url: url,
+          type: "POST",
+          contentType: "application/json",
+          data: param,
+          dataType: "json",
+          cache: false,
+          success: function (result, status) {
+            alert("상품을 장바구니에 담았습니다.");
+            location.href = "/";
+          },
+          error: function (jqXHR, status, error) {
+            if (jqXHR.status == "401") {
+              alert("로그인 후 이용해 주세요");
+              location.href = "/members/login";
+            } else {
+              alert(jqXHR.response.Text);
+            }
+          },
+        });
+      }
+
       $(function () {
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
@@ -133,7 +164,9 @@
           <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
         </div>
         <div th:if="${item.sellStatus == T(com.kosa.shop.constant.ItemSellStatus).SELL}" class="text-right">
-          <button type="button" class="btn btn-light border border-primary btn-lg">장바구니 담기</button>
+          <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCartItem()">
+            장바구니 담기
+          </button>
           <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
         </div>
         <div th:unless="${item.sellStatus == T(com.kosa.shop.constant.ItemSellStatus).SELL}" class="text-right">
