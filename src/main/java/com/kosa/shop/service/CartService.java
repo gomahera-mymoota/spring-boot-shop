@@ -3,6 +3,7 @@ package com.kosa.shop.service;
 import com.kosa.shop.domain.entity.Cart;
 import com.kosa.shop.domain.entity.CartItem;
 import com.kosa.shop.domain.entity.id.CartItemId;
+import com.kosa.shop.dto.CartDetailDto;
 import com.kosa.shop.dto.CartItemDto;
 import com.kosa.shop.repository.CartItemRepository;
 import com.kosa.shop.repository.CartRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -34,8 +37,7 @@ public class CartService {
         var cart = cartRepository.findByMemberId(member.getId())
                 .orElseGet(() -> cartRepository.save(Cart.createCart(member)));
 
-//        var cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId())
-        var cartItem = cartItemRepository.findByCartItemIdCartIdAndCartItemIdItemId(cart.getId(), item.getId())
+        var cartItem = cartItemRepository.findByCartItemId(new CartItemId(cart, item))
                 .orElseGet(() -> cartItemRepository.save(
                         CartItem.createCartItem(cart, item, 0)
                 ));
@@ -44,4 +46,20 @@ public class CartService {
 
         return cartItem.getCartItemId();
     }
+
+    // Optional을 적극적으로 사용한 것에 주의
+    // 메소드 이름 변경 <- getCartList
+    @Transactional(readOnly = true)
+    public List<CartDetailDto> getCartItemList(String email) {
+//        var cartDetailDtoList = new ArrayList<CartDetailDto>();
+        var member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+
+        var cartDetailDtoList = cartRepository.findByMemberId(member.getId())
+                .map(cart -> cartItemRepository.findCartDetailDtoList(cart.getId()))
+                .orElseGet(ArrayList<CartDetailDto>::new);
+
+        return cartDetailDtoList;
+    }
+
 }

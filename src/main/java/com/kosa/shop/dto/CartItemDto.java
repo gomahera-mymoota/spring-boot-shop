@@ -1,6 +1,8 @@
 package com.kosa.shop.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Min;
@@ -8,6 +10,8 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItemDto {
 
     @NotNull(message = "상품 아이디는 꼭 입력해야 합니다.")

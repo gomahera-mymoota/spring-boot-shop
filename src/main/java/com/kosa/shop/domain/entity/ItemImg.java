@@ -1,6 +1,7 @@
 package com.kosa.shop.domain.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "item_imgs", indexes = @Index(columnList = "item_id"))
 @Getter
 @Setter
+@NoArgsConstructor
 public class ItemImg extends BaseEntity {
 
     @Id
@@ -20,6 +22,10 @@ public class ItemImg extends BaseEntity {
     private String imgName;
     private String imgUrl;
     private Boolean isRepImg;
+
+    public ItemImg(Item item) {
+        this.item = item;
+    }
 
     public void updateItemImg(String oriImgName, String imgName, String imgUrl) {
         this.oriImgName = oriImgName;
