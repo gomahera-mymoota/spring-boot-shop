@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "orders")
@@ -50,12 +51,15 @@ public class Order extends BaseEntity {
         return order;
     }
 
-    public int getTotalPrice() {
-        var totalPrice = 0;
-
-        for (var orderItem : orderItems) {
-            totalPrice += orderItem.getTotalPrice();
-        }
+    public int getTotalPrice() {    // Java Streams 버전으로 변경
+//        var totalPrice = 0;
+//
+//        for (var orderItem : orderItems) {
+//            totalPrice += orderItem.getTotalPrice();
+//        }
+        var totalPrice = orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
 
         return totalPrice;
     }
@@ -63,9 +67,11 @@ public class Order extends BaseEntity {
     public void cancel() {
         this.orderStatus = OrderStatus.CANCELLED;
 
-        for (var orderItem : orderItems) {
-            orderItem.cancel();
-        }
+//        for (var orderItem : orderItems) {
+//            orderItem.cancel();
+//        }
+        orderItems.stream()
+                .forEach(OrderItem::cancel);
     }
 
 }
