@@ -32,12 +32,15 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "member")
+    private Cart cart;
+
     public static @NotNull Member createMember(@NotNull MemberFormDto memberFormDto,
                                                @NotNull PasswordEncoder passwordEncoder) {
         var member = new Member();
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
-        member.setAddress(member.getAddress());
+        member.setAddress(memberFormDto.getAddress());
         var password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);

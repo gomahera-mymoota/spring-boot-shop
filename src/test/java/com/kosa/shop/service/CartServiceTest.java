@@ -5,7 +5,7 @@ import com.kosa.shop.domain.entity.Item;
 import com.kosa.shop.domain.entity.ItemImg;
 import com.kosa.shop.domain.entity.Member;
 import com.kosa.shop.dto.CartItemDto;
-import com.kosa.shop.functional.ExceptionFunction;
+import com.kosa.shop.functional.ExceptionRunnable;
 import com.kosa.shop.repository.CartItemRepository;
 import com.kosa.shop.repository.ItemRepository;
 import com.kosa.shop.repository.MemberRepository;
@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,9 +66,8 @@ class CartServiceTest {
     MultipartFile getMultipartFile() throws Exception {
         var path = "C:/Devs/shop/item/test/";
         var imageName = "image0.jpg";
-        var multipartFile = new MockMultipartFile(path, imageName, "image/jpg", new byte[]{1, 2, 3, 4});
 
-        return multipartFile;
+        return new MockMultipartFile(path, imageName, "image/jpg", new byte[]{1, 2, 3, 4});
     }
 
     @Test
@@ -110,21 +108,30 @@ class CartServiceTest {
         var member = saveMember();
         var items = List.of(new Item[]{ saveItem(), saveItem(), saveItem() });
 
+//        items.stream()
+//                .map(ItemImg::new)
+//                .peek(itemImg -> itemImg.setIsRepImg(true))
+//                .forEach(item -> {
+//                    try {
+//                        itemImgService.saveItemImg(item, getMultipartFile());
+//                    } catch (Exception e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                });
+
+//        var cartItemDtoList = items.stream()
+//                .map(item -> new CartItemDto(item.getId(), 5))
+//                .toList();
+//        cartItemDtoList
+//                .forEach(dto -> cartService.addCartItem(dto, member.getEmail()));
+
         items.stream()
                 .map(ItemImg::new)
-                .forEach(itemImg -> {
-                    try {
-                        itemImg.setIsRepImg(true);
-                        itemImgService.saveItemImg(itemImg, getMultipartFile());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                .peek(img -> img.setIsRepImg(true))
+                .forEach(img -> wrap(() -> itemImgService.saveItemImg(img, getMultipartFile())));  // Java Streams 예외 처리
 
-        var cartItemDtoList = items.stream()
+        items.stream()
                 .map(item -> new CartItemDto(item.getId(), 5))
-                .toList();
-        cartItemDtoList.stream()
                 .forEach(dto -> cartService.addCartItem(dto, member.getEmail()));
 
         // when
@@ -134,13 +141,13 @@ class CartServiceTest {
         assertThat(cartDetailDtoList.size()).isEqualTo(items.size());
     }
 
-    public static <T, R> Function<T, R> wrap(ExceptionFunction<T, R> f) {
-        return t -> {
-            try {
-                return f.apply(t);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        };
+    private <T> void wrap(ExceptionRunnable<T> er) {
+        try {
+            er.run();
+        } catch (Exception e) {
+//            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
+
 }

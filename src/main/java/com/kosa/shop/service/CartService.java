@@ -2,6 +2,7 @@ package com.kosa.shop.service;
 
 import com.kosa.shop.domain.entity.Cart;
 import com.kosa.shop.domain.entity.CartItem;
+import com.kosa.shop.domain.entity.Member;
 import com.kosa.shop.domain.entity.id.CartItemId;
 import com.kosa.shop.dto.CartDetailDto;
 import com.kosa.shop.dto.CartItemDto;
@@ -12,6 +13,7 @@ import com.kosa.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -60,6 +62,37 @@ public class CartService {
                 .orElseGet(ArrayList<CartDetailDto>::new);
 
         return cartDetailDtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean validateCartItem(Long cartItemId, String email) {
+        var member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+        var item = itemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        var cartItem = cartItemRepository.findByCartItemId(new CartItemId(member.getCart(), item))
+                .orElseThrow(EntityNotFoundException::new);
+
+        var savedMember = cartItem.getCart().getMember();
+
+        return StringUtils.equals(member.getEmail(), savedMember.getEmail());
+    }
+
+    public void updateCartItemCount(CartItemId cartItemId, int count) {
+        var cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        cartItem.updateCount(count);
+    }
+
+    public void updateCartItemCount(Long cartItemId, String email, int count) {
+        var member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+        var item = itemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        this.updateCartItemCount(new CartItemId(member.getCart(), item), count);
     }
 
 }
