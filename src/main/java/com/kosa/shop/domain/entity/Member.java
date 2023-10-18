@@ -34,15 +34,21 @@ public class Member extends BaseEntity {
     private Role role;
 
     public static @NotNull Member createMember(@NotNull MemberFormDto memberFormDto,
-                                               @NotNull PasswordEncoder passwordEncoder) {
+                                               @NotNull PasswordEncoder passwordEncoder,
+                                               Role role) {
         var member = new Member();
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
         var password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
-        member.setRole(Role.ADMIN);
+        member.setRole(role);
 
         return member;
+    }
+
+    public static @NotNull Member createMember(@NotNull MemberFormDto memberFormDto,
+                                               @NotNull PasswordEncoder passwordEncoder) {
+        return Member.createMember(memberFormDto, passwordEncoder, Role.USER);
     }
 }
