@@ -1,6 +1,7 @@
 package com.kosa.shop.controller;
 
 import com.kosa.shop.domain.entity.id.CartItemId;
+import com.kosa.shop.domain.entity.id.QCartItemId;
 import com.kosa.shop.dto.CartItemDto;
 import com.kosa.shop.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class CartController {
 
     @PostMapping("/cart")
     @ResponseBody
-    public ResponseEntity<?> order(@RequestBody @Valid CartItemDto cartItemDto,
+    public ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto,
                                    BindingResult bindingResult,
                                    Principal principal) {
         if (bindingResult.hasErrors()) {
@@ -76,4 +77,19 @@ public class CartController {
 
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
+
+    @DeleteMapping("/cartItem/{cartItemId}")
+    @ResponseBody
+    public ResponseEntity<?> deleteCartItem(@PathVariable("cartItemId") Long cartItemId,
+                                            Principal principal) {
+        if (!cartService.validateCartItem(cartItemId, principal.getName())) {
+            return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
+        }
+
+        cartService.deleteCartItem(cartItemId, principal.getName());
+
+        return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+    }
+
+
 }

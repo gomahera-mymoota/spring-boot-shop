@@ -23,37 +23,6 @@
         $("#totalPrice").html(totalPrice + "원");
       }
 
-      function order() {
-        let url = "/order";
-        let paramData = {
-          itemId: $("#itemId").val(),
-          count: $("#count").val(),
-        };
-
-        let param = JSON.stringify(paramData);
-
-        $.ajax({
-          url: url,
-          type: "POST",
-          contentType: "application/json",
-          data: param,
-          dataType: "json",
-          cache: false,
-          success: function (result, status) {
-            alert("주문이 완료되었습니다.");
-            location.href = "/";
-          },
-          error: function (jqXHR, status, error) {
-            if (jqXHR.status == "401") {
-              alert("로그인 후 이용해 주세요");
-              location.href = "/members/login";
-            } else {
-              alert(jqXHR.responseText);
-            }
-          },
-        });
-      }
-
       function addCartItem() {
         let url = "/cart";
         let paramData = {
@@ -72,6 +41,39 @@
           cache: false,
           success: function (result, status) {
             alert("상품을 장바구니에 담았습니다.");
+            console.log("result: =====> " + result);
+            console.log("status: =====> " + status);
+            location.href = "/";
+          },
+          error: function (jqXHR, status, error) {
+            if (jqXHR.status == "401") {
+              alert("로그인 후 이용해 주세요");
+              location.href = "/members/login";
+            } else {
+              alert(jqXHR.responseText);
+            }
+          },
+        });
+      }
+
+      function order() {
+        let url = "/order";
+        let paramData = {
+          itemId: $("#itemId").val(),
+          count: $("#count").val(),
+        };
+
+        let param = JSON.stringify(paramData);
+
+        $.ajax({
+          url: url,
+          type: "POST",
+          contentType: "application/json",
+          data: param,
+          dataType: "json",
+          cache: false,
+          success: function (result, status) {
+            alert("주문이 완료되었습니다.");
             location.href = "/";
           },
           error: function (jqXHR, status, error) {

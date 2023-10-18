@@ -92,7 +92,7 @@ class CartServiceTest {
 
         System.out.println("========================================");
 
-        var cartItem2 = cartItemRepository.findByCartItemIdCartIdAndCartItemIdItemId(
+        var cartItem2 = cartItemRepository.findByCartItemIdCartMemberIdMemberIdAndCartItemIdItemId(
                 cartItemId.getCart().getId(), cartItemId.getItem().getId())
                 .orElseThrow(EntityNotFoundException::new);
 

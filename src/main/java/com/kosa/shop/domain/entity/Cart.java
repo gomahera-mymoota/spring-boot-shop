@@ -1,30 +1,40 @@
 package com.kosa.shop.domain.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.kosa.shop.domain.entity.id.MemberId;
+import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "carts")
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Cart extends BaseEntity {
 
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @EmbeddedId
+    private MemberId memberId;
 
-    @OneToOne
-    private Member member;
+    private Cart(Member member) {
+        this.memberId = new MemberId(member);
+    }
 
     public static Cart createCart(Member member) {
-        var cart = new Cart();
-        cart.setMember(member);
+        return new Cart(member);
+    }
 
-        return cart;
+    public void setMember(Member member) {
+        this.memberId.setMember(member);
+    }
+
+    public Member getMember() {
+        return this.memberId.getMember();
+    }
+
+    public Long getId() {
+        return this.getMember().getId();
     }
 }

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "members")  // 테이블 이름을 복수형으로(책과 다름)
@@ -31,9 +32,6 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @OneToOne(mappedBy = "member")
-    private Cart cart;
 
     public static @NotNull Member createMember(@NotNull MemberFormDto memberFormDto,
                                                @NotNull PasswordEncoder passwordEncoder) {
