@@ -19,6 +19,9 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional
@@ -31,14 +34,33 @@ public class OrderService {
     private final ItemImgRepository itemImgRepository;
 
     public Long order(OrderDto orderDto, String email) {
-        var item = itemRepository.findById(orderDto.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
         var member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+        var item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
         var orderItemList = new ArrayList<OrderItem>();
         var orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
         orderItemList.add(orderItem);
+
+        var order = Order.createOrder(member, orderItemList);
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
+    public Long order(List<OrderDto> orderDtoList, String email) {
+        var member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+
+        var itemList = orderDtoList.stream()
+                .mapToLong(OrderDto::getItemId)
+                .mapToObj(itemId -> itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new))
+                .toList();
+
+        var orderItemList = IntStream.range(0, itemList.size())
+                .mapToObj(i -> OrderItem.createOrderItem(itemList.get(i), orderDtoList.get(i).getCount()))
+                .toList();
 
         var order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
