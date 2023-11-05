@@ -1,4 +1,4 @@
-package com.kosa.shop.functional;
+package com.kosa.shop.util.functional;
 
 @FunctionalInterface
 public interface ExceptionRunnable<T> {

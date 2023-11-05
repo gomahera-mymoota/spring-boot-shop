@@ -1,7 +1,6 @@
 package com.kosa.shop.controller;
 
 import com.kosa.shop.domain.entity.id.CartItemId;
-import com.kosa.shop.domain.entity.id.QCartItemId;
 import com.kosa.shop.dto.CartItemDto;
 import com.kosa.shop.service.CartService;
 import lombok.RequiredArgsConstructor;

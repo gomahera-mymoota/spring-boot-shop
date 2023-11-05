@@ -5,7 +5,8 @@ import com.kosa.shop.domain.entity.Item;
 import com.kosa.shop.domain.entity.ItemImg;
 import com.kosa.shop.domain.entity.Member;
 import com.kosa.shop.dto.CartItemDto;
-import com.kosa.shop.functional.ExceptionRunnable;
+import com.kosa.shop.util.Utils;
+import com.kosa.shop.util.functional.ExceptionRunnable;
 import com.kosa.shop.repository.CartItemRepository;
 import com.kosa.shop.repository.ItemRepository;
 import com.kosa.shop.repository.MemberRepository;
@@ -102,7 +103,7 @@ class CartServiceTest {
     }
 
     @Test
-    @DisplayName("장바구니 목록 가져오기 테스트")
+    @DisplayName("장바구니 아이템 목록 가져오기 테스트")
     public void getCartItemList() throws Exception {
         // given
         var member = saveMember();
@@ -128,7 +129,7 @@ class CartServiceTest {
         items.stream()
                 .map(ItemImg::new)
                 .peek(img -> img.setIsRepImg(true))
-                .forEach(img -> wrap(() -> itemImgService.saveItemImg(img, getMultipartFile())));  // Java Streams 예외 처리
+                .forEach(img -> Utils.wrap(() -> itemImgService.saveItemImg(img, getMultipartFile())));  // Java Streams 예외 처리
 
         items.stream()
                 .map(item -> new CartItemDto(item.getId(), 5))
@@ -139,15 +140,6 @@ class CartServiceTest {
 
         // then
         assertThat(cartDetailDtoList.size()).isEqualTo(items.size());
-    }
-
-    private <T> void wrap(ExceptionRunnable<T> er) {
-        try {
-            er.run();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
     }
 
 }

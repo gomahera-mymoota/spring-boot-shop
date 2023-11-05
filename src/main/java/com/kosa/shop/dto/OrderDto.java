@@ -4,6 +4,7 @@ import com.kosa.shop.domain.entity.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class OrderDto {
 
